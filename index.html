@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sequence Diagram Renderer</title>
+<link rel="stylesheet" href="style.css">
+<script src="basicGraphics.js" defer></script>
+</head>
+<body>
+<main>
+<header><p class="eyebrow">MEMBER C · BASIC GRAPHICS</p><h1>Sequence Diagram Renderer</h1><p>Static UML rendering prototype</p></header>
+<section class="panel"><label for="source">Process Algebra input</label><textarea id="source" rows="3" placeholder="Parser integration pending" disabled></textarea><p class="hint">Parser integration will be provided by Member A. This prototype uses fixed sample coordinates.</p><button id="render">Render sample</button></section>
+<section class="panel"><h2>Diagram preview</h2><div class="preview"><svg id="diagram" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" role="img" aria-label="Sample UML participants and lifelines"></svg></div><p id="status" role="status"></p></section>
+</main>
+</body></html>
