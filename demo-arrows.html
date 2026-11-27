@@ -1,0 +1,176 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1" />
+
+  <title>Member B - UML Message Arrow Demo</title>
+
+  <style>
+    body {
+      margin: 24px;
+      font-family: Arial, Helvetica, sans-serif;
+      background: white;
+      color: #111;
+    }
+
+    h1 {
+      font-size: 22px;
+    }
+
+    p {
+      color: #444;
+    }
+
+    svg {
+      display: block;
+      width: 100%;
+      max-width: 960px;
+      height: auto;
+      background: white;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Member B: Message Arrow Rendering</h1>
+
+  <p>
+    Standalone test only. Lifeline headers are temporary
+    placeholders, not part of Member B's renderer.
+  </p>
+
+  <svg
+    id="diagram"
+    viewBox="0 0 920 700"
+    role="img"
+    aria-label="UML sequence diagram message types">
+  </svg>
+
+  <script type="module">
+    import { drawMessage } from './src/messageArrows.js';
+
+    const svg = document.getElementById('diagram');
+    const ns = 'http://www.w3.org/2000/svg';
+
+    const lifelines = [160, 455, 750];
+    const names = ['Client', 'Server', 'Database'];
+
+    // Temporary lifelines for testing
+    // Member C will handle these in the final application.
+
+    lifelines.forEach((x, i) => {
+
+      const header = document.createElementNS(ns, 'rect');
+
+      Object.entries({
+        x: x - 55,
+        y: 24,
+        width: 110,
+        height: 36,
+        fill: 'white',
+        stroke: '#111'
+      }).forEach(([k, v]) => header.setAttribute(k, v));
+
+      svg.appendChild(header);
+
+      const title = document.createElementNS(ns, 'text');
+
+      Object.entries({
+        x,
+        y: 46,
+        'text-anchor': 'middle',
+        'font-size': 14,
+        fill: '#111'
+      }).forEach(([k, v]) => title.setAttribute(k, v));
+
+      title.textContent = names[i];
+      svg.appendChild(title);
+
+      const lifeline = document.createElementNS(ns, 'line');
+
+      Object.entries({
+        x1: x,
+        x2: x,
+        y1: 60,
+        y2: 675,
+        stroke: '#666',
+        'stroke-dasharray': '5 5'
+      }).forEach(([k, v]) => lifeline.setAttribute(k, v));
+
+      svg.appendChild(lifeline);
+    });
+
+    // 1. Synchronous message
+    drawMessage(svg, {
+      type: 'synchronous',
+      fromX: 160,
+      toX: 455,
+      y: 125,
+      label: 'login()'
+    });
+
+    // 2. Asynchronous message
+    drawMessage(svg, {
+      type: 'asynchronous',
+      fromX: 160,
+      toX: 750,
+      y: 205,
+      label: 'sendEvent()',
+      labelX: 310
+    });
+
+    // 3. Reply message
+    drawMessage(svg, {
+      type: 'reply',
+      fromX: 750,
+      toX: 160,
+      y: 285,
+      label: 'result',
+      labelX: 310
+    });
+
+    // 4. Right-to-left synchronous message
+    drawMessage(svg, {
+      type: 'synchronous',
+      fromX: 750,
+      toX: 455,
+      y: 360,
+      label: 'check()'
+    });
+
+    // 5. Self-message
+    drawMessage(svg, {
+      type: 'self',
+      fromX: 455,
+      toX: 455,
+      y: 430,
+      label: 'validate()'
+    });
+
+    // 6. Found message
+    drawMessage(svg, {
+      type: 'found',
+      fromX: 80,
+      toX: 160,
+      y: 525,
+      label: 'incoming()'
+    });
+
+    // 7. Lost message
+    drawMessage(svg, {
+      type: 'lost',
+      fromX: 455,
+      toX: 820,
+      y: 600,
+      label: 'outgoing()'
+    });
+
+  </script>
+
+</body>
+</html>

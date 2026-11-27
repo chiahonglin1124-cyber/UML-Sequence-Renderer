@@ -1,0 +1,119 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1">
+
+  <title>Member B - Creation & Destruction Demo</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 24px;
+      color: #111;
+    }
+
+    svg {
+      border: 1px solid #ccc;
+      width: 100%;
+      max-width: 900px;
+      height: auto;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2>Member B: Creation & Destruction Messages</h2>
+
+  <p>
+    Headers and lifelines are temporary test placeholders.
+  </p>
+
+  <svg id="diagram" viewBox="0 0 800 420"></svg>
+
+  <script type="module">
+    import { drawMessage } from './src/messageArrows.js';
+
+    const svg = document.getElementById('diagram');
+    const ns = 'http://www.w3.org/2000/svg';
+
+    function add(tag, attributes, label = '') {
+      const element = document.createElementNS(ns, tag);
+
+      Object.entries(attributes).forEach(([k, v]) => {
+        element.setAttribute(k, v);
+      });
+
+      if (label) element.textContent = label;
+
+      svg.appendChild(element);
+    }
+
+    // Temporary participant graphics for testing
+    function participant(x, name, headerY, endY) {
+      add('rect', {
+        x: x - 55,
+        y: headerY,
+        width: 110,
+        height: 36,
+        fill: 'white',
+        stroke: 'black'
+      });
+
+      add('text', {
+        x,
+        y: headerY + 24,
+        'text-anchor': 'middle',
+        'font-size': 15
+      }, name);
+
+      add('line', {
+        x1: x,
+        x2: x,
+        y1: headerY + 36,
+        y2: endY,
+        stroke: '#777',
+        'stroke-dasharray': '5 5'
+      });
+    }
+
+    // Existing participant
+    participant(180, 'Client', 24, 385);
+
+    // Worker is created later and destroyed at y = 320
+    participant(490, 'Worker', 142, 320);
+
+    // CREATION
+    drawMessage(svg, {
+      type: 'create',
+      fromX: 180,
+      toX: 490,
+      y: 160,
+      label: 'createWorker()',
+      targetHeaderWidth: 110
+    });
+
+    // NORMAL MESSAGE
+    drawMessage(svg, {
+      type: 'asynchronous',
+      fromX: 180,
+      toX: 490,
+      y: 244,
+      label: 'doTask()'
+    });
+
+    // DESTRUCTION
+    drawMessage(svg, {
+      type: 'destroy',
+      fromX: 180,
+      toX: 490,
+      y: 320,
+      label: 'deleteWorker()'
+    });
+
+  </script>
+</body>
+</html>
