@@ -1,16 +1,43 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sequence Diagram Renderer</title>
-<link rel="stylesheet" href="style.css">
-<script src="basicGraphics.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sequence Diagram Renderer</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="basicGraphics.js" defer></script>
 </head>
 <body>
-<main>
-<header><p class="eyebrow">MEMBER C · BASIC GRAPHICS</p><h1>Sequence Diagram Renderer</h1><p>Static UML rendering prototype</p></header>
-<section class="panel"><label for="source">Process Algebra input</label><textarea id="source" rows="3" placeholder="Parser integration pending" disabled></textarea><p class="hint">Parser integration will be provided by Member A. This prototype uses fixed sample coordinates.</p><button id="render">Render sample</button></section>
-<section class="panel"><h2>Diagram preview</h2><div class="preview"><svg id="diagram" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" role="img" aria-label="Sample UML participants and lifelines"></svg></div><p id="status" role="status"></p></section>
-</main>
-</body></html>
+  <main>
+    <header>
+      <h1>Sequence Diagram Renderer</h1>
+    </header>
+    <section class="panel">
+      <div class="sample-controls">
+        <div>
+          <label for="sample">Sample diagram</label>
+          <select id="sample">
+            <option value="basic">Client, server, and database</option>
+            <option value="nested">Nested service activations</option>
+          </select>
+        </div>
+        <button id="render" type="button">Render sample</button>
+      </div>
+      <details>
+        <summary>Process Algebra input</summary>
+        <label for="source">Source text</label>
+        <textarea id="source" rows="3" aria-describedby="source-hint" disabled></textarea>
+        <p id="source-hint" class="hint">Input will be available after parser integration.</p>
+      </details>
+    </section>
+    <section class="panel">
+      <h2>Diagram preview</h2>
+      <div class="preview" tabindex="0" role="region" aria-label="Scrollable diagram preview">
+        <svg id="diagram" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360"
+             role="img" aria-label="UML participants, lifelines, and activation bars"></svg>
+      </div>
+      <p id="status" role="status"></p>
+    </section>
+  </main>
+</body>
+</html>
